@@ -11,7 +11,7 @@
 
   {maintainers, ["Benoit Chesneau"]},
   {licenses, ["Apache 2.0"]},
-  {links, [{"Github", "https://github.com/benoitc/erlang_util_compat"}]},
+  {links, [{"Github", "https://github.com/benoitc/unicode_util_compat"}]},
   {files, ["src",
            "uc_spec",
            "rebar.config",
