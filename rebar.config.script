@@ -1,3 +1,4 @@
+_ = code:ensure_loaded(unicode_util),
 case erlang:function_exported(unicode_util, gc, 1) of
   true -> CONFIG;
   false ->
