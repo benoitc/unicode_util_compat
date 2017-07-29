@@ -24,7 +24,7 @@
 -mode(compile).
 
 -record(cp, {name, class, dec, comp, cs}).
--define(MOD, "unicode_util").
+-define(MOD, "unicode_util_compat").
 
 main(_) ->
     %%  Parse main table
@@ -158,6 +158,7 @@ gen_file(Fd, Data, ExclData, Props) ->
     gen_compose_pairs(Fd, ExclData, Data),
     gen_case_table(Fd, Data),
     gen_unicode_table(Fd, Data),
+    gen_trailer(Fd),
     ok.
 
 gen_header(Fd) ->
@@ -169,10 +170,31 @@ gen_header(Fd) ->
     io:put_chars(Fd, "-export([whitespace/0, is_whitespace/1]).\n"),
     io:put_chars(Fd, "-export([uppercase/1, lowercase/1, titlecase/1, casefold/1]).\n\n"),
     io:put_chars(Fd, "-export([spec_version/0, lookup/1, get_case/1]).\n"),
+    io:put_chars(Fd, "-ifdef(OTP20).\n"),
+    io:put_chars(Fd, "cp(Argument) -> unicode_util:cp(Argument).\n"),
+    io:put_chars(Fd, "gc(Argument) -> unicode_util:gc(Argument).\n"),
+    io:put_chars(Fd, "nfd(Argument) -> unicode_util:nfd(Argument).\n"),
+    io:put_chars(Fd, "nfc(Argument) -> unicode_util:nfc(Argument).\n"),
+    io:put_chars(Fd, "nfkd(Argument) -> unicode_util:nfkd(Argument).\n"),
+    io:put_chars(Fd, "nfkc(Argument) -> unicode_util:nfkc(Argument).\n"),
+    io:put_chars(Fd, "whitespace() -> unicode_util:whitespace().\n"),
+    io:put_chars(Fd, "is_whitespace(Argument) -> unicode_util:is_whitespace(Argument).\n"),
+    io:put_chars(Fd, "uppercase(Argument) -> unicode_util:uppercase(Argument).\n"),
+    io:put_chars(Fd, "lowercase(Argument) -> unicode_util:lowercase(Argument).\n"),
+    io:put_chars(Fd, "titlecase(Argument) -> unicode_util:titlecase(Argument).\n"),
+    io:put_chars(Fd, "casefold(Argument) -> unicode_util:casefold(Argument).\n"),
+    io:put_chars(Fd, "spec_version() -> unicode_util:spec_version().\n"),
+    io:put_chars(Fd, "lookup(Argument) -> unicode_util:lookup(Argument).\n"),
+    io:put_chars(Fd, "get_case(Argument) -> unicode_util:get_case(Argument).\n"),
+    io:put_chars(Fd, "-else.\n"),
     io:put_chars(Fd, "-inline([class/1]).\n"),
     io:put_chars(Fd, "-compile(nowarn_unused_vars).\n"),
     io:put_chars(Fd, "-dialyzer({no_improper_lists, cp/1}).\n"),
     io:put_chars(Fd, "-type gc() :: char()|[char()].\n\n\n"),
+    ok.
+
+gen_trailer(Fd) ->
+    io:put_chars(Fd, "-endif.\n"),
     ok.
 
 gen_static(Fd) ->

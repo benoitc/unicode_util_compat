@@ -15,5 +15,4 @@ logs
 _build
 .idea
 
-src/unicode_util.erl
 rebar3.crashdump
