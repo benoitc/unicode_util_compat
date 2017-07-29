@@ -1,6 +1,6 @@
 {application, unicode_util_compat,
- [{description, "An OTP library"},
-  {vsn, "0.3.0"},
+ [{description, "unicode_util compatibility library for Erlang < 20"},
+  {vsn, "0.3.1"},
   {registered, []},
   {applications,
    [kernel,
