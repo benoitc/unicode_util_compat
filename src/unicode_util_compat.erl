@@ -32,6 +32,8 @@ get_case(Argument) -> unicode_util:get_case(Argument).
 -type gc() :: char()|[char()].
 
 
+
+
 -spec lookup(char()) -> map().
 lookup(Codepoint) ->
     {CCC,Can,Comp} = unicode_table(Codepoint),
@@ -51,29 +53,61 @@ class(Codepoint) -> {CCC,_,_} = unicode_table(Codepoint),
     CCC.
 
 -spec uppercase(unicode:chardata()) -> maybe_improper_list(gc(),unicode:chardata()).
+uppercase(Str0) when is_binary(Str0) ->
+    unicode:characters_to_binary(do_uppercase(Str0));
+
 uppercase(Str0) ->
+    do_uppercase(Str0).
+
+%% @private
+do_uppercase(Str0) ->
+    lists:reverse(do_uppercase(Str0, [])).
+
+%% @private
+do_uppercase(Str0, Acc) ->
     case cp(Str0) of
         [CP|Str] = Str1 ->
             case case_table(CP) of
-                {Upper,_} -> [Upper|Str];
-                {Upper,_,_,_} -> [Upper|Str]
+                {Upper,_} -> do_uppercase(Str, [Upper|Acc]);
+                {Upper,_,_,_} -> do_uppercase(Str, [Upper|Acc])
             end;
-        [] -> []
+        [] -> Acc
     end.
 
--spec lowercase(unicode:chardata()) -> maybe_improper_list(gc(),unicode:chardata()).
+
+-spec lowercase(unicode:chardata()) -> unicode:chardata().
+
+lowercase(Str0) when is_binary(Str0) ->
+    unicode:characters_to_binary(do_lowercase(Str0));
+
 lowercase(Str0) ->
+    do_lowercase(Str0).
+
+%% @private
+do_lowercase(Str0) ->
+    lists:reverse(do_lowercase(Str0, [])).
+
+%% @private
+do_lowercase(Str0, Acc) ->
     case cp(Str0) of
         [CP|Str] = Str1 ->
             case case_table(CP) of
-                {_,Lower} -> [Lower|Str];
-                {_,Lower,_,_} -> [Lower|Str]
+                {_,Lower} -> do_lowercase(Str, [Lower|Acc]);
+                {_,Lower,_,_} -> do_lowercase(Str, [Lower|Acc])
             end;
-        [] -> []
+        [] -> Acc
     end.
 
--spec titlecase(unicode:chardata()) -> maybe_improper_list(gc(),unicode:chardata()).
-titlecase(Str0) ->
+-spec titlecase(unicode:chardata()) -> unicode:chardata().
+
+titlecase(Str0) when is_binary(Str0) ->
+    unicode:characters_to_binary(do_titlecase(Str0));
+
+titlecase(Str0) when is_binary(Str0) ->
+    do_titlecase(Str0).
+
+%% @private
+do_titlecase(Str0) ->
     case cp(Str0) of
         [CP|Str] = Str1 ->
             case case_table(CP) of
@@ -83,16 +117,28 @@ titlecase(Str0) ->
         [] -> []
     end.
 
--spec casefold(unicode:chardata()) -> maybe_improper_list(gc(),unicode:chardata()).
+-spec casefold(unicode:chardata()) -> unicode:chardata().
+casefold(Str0) when is_binary(Str0) ->
+    unicode:characters_to_binary(do_casefold(Str0));
+
 casefold(Str0) ->
+    do_casefold(Str0).
+
+%% @private
+do_casefold(Str0) ->
+    lists:reverse(do_casefold(Str0, [])).
+
+%% @private
+do_casefold(Str0, Acc) ->
     case cp(Str0) of
         [CP|Str] = Str1 ->
             case case_table(CP) of
-                {_,_,_,Fold} -> [Fold|Str];
-                {_,Lower} -> [Lower|Str]
+                {_,_,_,Fold} -> do_casefold(Str, [Fold|Acc]);
+                {_,Lower} -> do_casefold(Str, [Lower|Acc])
             end;
-        [] -> []
+        [] -> Acc
     end.
+
 
 -spec nfd(unicode:chardata()) -> maybe_improper_list(gc(),unicode:chardata()).
 nfd(Str0) ->
