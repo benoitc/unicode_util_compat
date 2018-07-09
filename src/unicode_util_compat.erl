@@ -32,12 +32,12 @@ get_case(Argument) -> unicode_util:get_case(Argument).
 -type gc() :: char()|[char()].
 
 
--spec lookup(char()) -> #{'canon':=[{byte(),char()}], 'ccc':=byte(), 'compat':=[] | {atom(),[{byte(),char()}]}}.
+-spec lookup(char()) -> map().
 lookup(Codepoint) ->
     {CCC,Can,Comp} = unicode_table(Codepoint),
     #{ccc=>CCC, canon=>Can, compat=>Comp}.
 
--spec get_case(char()) -> #{'fold':=gc(), 'lower':=gc(), 'title':=gc(), 'upper':=gc()}.
+-spec get_case(char()) -> map().
 get_case(Codepoint) ->
     case case_table(Codepoint) of
         {U,L} -> #{upper=>U,lower=>L,title=>U,fold=>L};
