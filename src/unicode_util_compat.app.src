@@ -9,7 +9,6 @@
   {env,[]},
   {modules, []},
 
-  {maintainers, ["Benoit Chesneau"]},
   {licenses, ["Apache 2.0"]},
   {links, [{"Github", "https://github.com/benoitc/unicode_util_compat"}]},
   {files, ["src",
