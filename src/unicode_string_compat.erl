@@ -45,7 +45,7 @@
 %% unicode:chardata() i.e. binary input => binary output,
 %% list input => list output mixed input => mixed output
 %%
--module(string_compat).
+-module(unicode_string_compat).
 
 -export([is_empty/1, length/1, to_graphemes/1,
          reverse/1,
@@ -88,7 +88,7 @@
 %%% May be removed
 -export([list_to_float/1, list_to_integer/1]).
 
-%% Uses bifs: string_compat:list_to_float/1 and string_compat:list_to_integer/1
+%% Uses bifs: unicode_string_compat:list_to_float/1 and unicode_string_compat:list_to_integer/1
 -spec list_to_float(String) -> {Float, Rest} | {'error', Reason} when
       String :: string(),
       Float :: float(),
@@ -399,7 +399,7 @@ to_integer(String) ->
                 true -> {error, no_integer};
                 false ->
                     List = unicode:characters_to_list(Head),
-                    case string_compat:list_to_integer(List) of
+                    case unicode_string_compat:list_to_integer(List) of
                         {error, _} = Err -> Err;
                         {Int, Rest} ->
                             to_number(String, Int, Rest, List, Tail)
@@ -421,7 +421,7 @@ to_float(String) ->
                 true -> {error, no_float};
                 false ->
                     List = unicode:characters_to_list(Head),
-                    case string_compat:list_to_float(List) of
+                    case unicode_string_compat:list_to_float(List) of
                         {error, _} = Err -> Err;
                         {Float, Rest} ->
                             to_number(String, Float, Rest, List, Tail)
