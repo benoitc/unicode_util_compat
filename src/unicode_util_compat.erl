@@ -44,7 +44,7 @@ get_case(Codepoint) ->
         {U,L,T,F} -> #{upper=>U,lower=>L,title=>T,fold=>F}
     end.
 
-spec_version() -> {12,1}.
+spec_version() -> {13,0}.
 
 
 class(Codepoint) -> {CCC,_,_} = unicode_table(Codepoint),
