@@ -26,7 +26,7 @@ spec_version() -> unicode_util:spec_version().
 lookup(Argument) -> unicode_util:lookup(Argument).
 get_case(Argument) -> unicode_util:get_case(Argument).
 -else.
--inline([class/1]).
+-compile({inline, [class/1]}).
 -compile(nowarn_unused_vars).
 -dialyzer({no_improper_lists, [cp/1, gc/1, gc_prepend/2]}).
 -type gc() :: char()|[char()].
