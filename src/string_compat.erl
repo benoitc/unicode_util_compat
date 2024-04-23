@@ -99,7 +99,7 @@ lexemes(String, SeperatorList) -> string:lexemes(String, SeperatorList).
 nth_lexeme(String, N, SeparatorList) -> string:nth_lexeme(String, N, SeparatorList).
 uppercase(String) -> string:uppercase(String).
 lowercase(String) -> string:lowercase(String).
-titlecase(String) -> strring:titlecase(String).
+titlecase(String) -> string:titlecase(String).
 casefold(String) -> string:casefold(String).
 prefix(String, Prefix) -> string:prefix(String, Prefix).
 split(String, SearchPattern) -> string:split(String, SearchPattern).
@@ -121,7 +121,7 @@ rchr(String, Character)  -> string:rchr(String, Character).
 str(S, Sub) -> string:str(S, Sub).
 rstr(S, Sub) -> string:rstr(S, Sub).
 span(String, Chars) -> string:span(String, Chars).
-cspan(String, Chars) -> cstring:span(String, Chars).
+cspan(String, Chars) -> string:span(String, Chars).
 substr(String, Start) -> string:substr(String, Start).
 substr(String, Start, Length) -> string:substr(String, Start, Length).
 tokens(String, SeparatorList) -> string:tokens(String, SeparatorList).
